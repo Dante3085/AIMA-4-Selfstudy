@@ -13,7 +13,7 @@ class Environment:
         self.env = []
         self.randomizeEnvironment(width, height)
         self.agent = agent
-        self.agentLocation = [random.randint(0, width), random.randint(0, height)]
+        self.agentLocation = [random.randint(0, width - 1), random.randint(0, height - 1)]
         
     def randomizeEnvironment(self, width, height):
         for i in range(0, height):
