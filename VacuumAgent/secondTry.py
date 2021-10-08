@@ -1,12 +1,27 @@
 
 import random
+import sys
 
+# Folgendes weiß der Agent...
+# 1. Wie viel Dreck er bereits bereinigt hat.
+# 2. Ob das Feld, auf dem er steht sauber oder dreckig ist?
+#
+# Was kann der Agent mit diesen Informationen tun, um besser als zufällig
+# seine Umgebung vollständig zu säubern?
 class Agent:
+    def __init__(self):
+        self.cleanedUpDirt = 0
+
     def act(self, state):
         if state == "C":
             return "MOVE_RANDOMLY"
         elif state == "D":
+            self.cleanedUpDirt += 1
             return "CLEAN"
+
+    # Kann man hier irgendwo das Konzept einer reward function einbringen?
+    # Beziehungsweise eine Heuristik abhängig vom Zustand der Umgebung, die 
+    # der Agent nutzen kann, um bessere Entscheidungen zu treffen?
 
 class Environment:
     def __init__(self, width, height, agent) -> None:
@@ -80,9 +95,14 @@ class Environment:
         if self.agentLocation[1] >= len(self.env):
             self.agentLocation[1] = len(self.env) - 1
 
+envWidth = 3
+envHeight = 3
+if len(sys.argv) > 1:
+    envWidth = int(sys.argv[1])
+    envHeight = int(sys.argv[2])
 
 agent = Agent()  
-env = Environment(3, 3, agent)
+env = Environment(envWidth, envHeight, agent)
 print("INITIAL ENVIRONMENT\n" + env.toString() + "\n-----------")
 
 while (True):
