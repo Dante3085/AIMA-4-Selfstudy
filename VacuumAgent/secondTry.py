@@ -1,13 +1,6 @@
 
 import random
-import sys
 
-# Folgendes weiß der Agent...
-# 1. Wie viel Dreck er bereits bereinigt hat.
-# 2. Ob das Feld, auf dem er steht sauber oder dreckig ist?
-#
-# Was kann der Agent mit diesen Informationen tun, um besser als zufällig
-# seine Umgebung vollständig zu säubern?
 class Agent:
     def __init__(self):
         self.cleanedUpDirt = 0
@@ -25,12 +18,12 @@ class Agent:
 
 class Environment:
     def __init__(self, width, height, agent) -> None:
-        self.env = []
         self.randomizeEnvironment(width, height)
         self.agent = agent
         self.agentLocation = [random.randint(0, width - 1), random.randint(0, height - 1)]
         
     def randomizeEnvironment(self, width, height):
+        self.env = []
         for i in range(0, height):
             self.env.append([])
             for j in range(0, width):
@@ -108,20 +101,3 @@ class Environment:
             self.agentLocation[1] = 0
         if self.agentLocation[1] >= len(self.env):
             self.agentLocation[1] = len(self.env) - 1
-
-envWidth = 3
-envHeight = 3
-if len(sys.argv) > 1:
-    envWidth = int(sys.argv[1])
-    envHeight = int(sys.argv[2])
-
-agent = Agent()  
-env = Environment(envWidth, envHeight, agent)
-print("INITIAL ENVIRONMENT\n" + env.toString() + "\n-----------")
-
-""" while (True):
-    inp = input("Press enter to tick the environment!")
-    env.tick()
-    print(env.toString() + "\n----------") """
-
-print("It took '" + str(env.tickUntilFinished()) + "' timesteps to clean the entire environment.")
