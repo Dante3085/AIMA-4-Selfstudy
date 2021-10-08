@@ -81,6 +81,20 @@ class Environment:
 
             self.__checkAgentBounds()
 
+    def tickUntilFinished(self):
+        timeSteps = 0
+        while (self.isDirty()):
+            self.tick()
+            timeSteps += 1
+        return timeSteps
+
+    def isDirty(self):
+        for row in self.env:
+            for state in row:
+                if state == "D":
+                    return True
+        return False
+
     def __checkAgentBounds(self):
         '''If any of the Agents coordinates are outside of the enviornment's bounds, this method
            corrects those to the closest value in the direction they went of the bounds.'''
@@ -105,7 +119,9 @@ agent = Agent()
 env = Environment(envWidth, envHeight, agent)
 print("INITIAL ENVIRONMENT\n" + env.toString() + "\n-----------")
 
-while (True):
+""" while (True):
     inp = input("Press enter to tick the environment!")
     env.tick()
-    print(env.toString() + "\n----------")
+    print(env.toString() + "\n----------") """
+
+print("It took '" + str(env.tickUntilFinished()) + "' timesteps to clean the entire environment.")
